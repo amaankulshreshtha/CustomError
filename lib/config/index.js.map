@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../src/config/index.js"],"names":["default","CONSTRUCTOR_CONFIG"],"mappings":"AAAA,SAASA,OAAO,IAAIC,kBAApB,QAA8C,qBAA9C","sourcesContent":["export { default as CONSTRUCTOR_CONFIG } from './constructorConfig';"],"file":"index.js"}
