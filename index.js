@@ -1,3 +1,7 @@
+import { CONSTRUCTOR_CONFIG } from "./config";
+import { defineStack } from "./helpers";
+import EmptyObjectError from "./EmptyObjectError";
+
 const styles = [
     'display: block'
     , 'background: #E91E63'
@@ -6,66 +10,12 @@ const styles = [
 ].join(';');
 
 
-function defineStack(stack) {
-    // Converting the exisiting string trace into an array
-    stack = stack.split('\n');
-    // Removing the first 2 elements of the array
-    for(let i = 0; i < 3; ++i) {
-        stack.shift();
-    }
-    // Returning the value of this.stack to the required stack trace
-    return stack.join('\n').trim();
-}
-
-const constructorConfig = {
-    // Can't think of a case where properties of the prototype need to modified from the outside
-    writable: false,
-    // Can't think of a case where Object.keys or a for...in loop will be used on the prototype
-    enumerable: false,
-    configurable: true
-}
-
-function EmptyObjectError (msg) {
-    this.message = msg;
-    this.name = this.constructor.name;
-
-    /* 
-        Why not going with Error.captureStackTrace
-
-        - We can't customise from which row of the stack do we want to see the errors.
-        - First row will be the EmptyObjectError function
-        - Second row will be the helper function in which we are utilising the custom error function
-    */
-
-   let stack = new Error().stack;
-    // The trace is always returned in the form of a string
-    if (typeof stack === 'string') {
-        this.stack = defineStack(stack);
-    } else {
-        /* 
-            This will call the inbuilt trace method
-            - The second argument omits the current function from generated stack trace
-            - Because of the constructor passed in the prototype, `this` refers to EmptyObjectError function
-            - The stack trace will however include the util method
-        */
-        Error.captureStackTrace(this, this.constructor)
-    }
-}
-
-EmptyObjectError.prototype = Object.create(Error.prototype, {
-    // Without the following constructor, `this` would refer to the Error function i.e the parent function
-    constructor: Object.assign(constructorConfig, {
-        value: EmptyObjectError
-    })
-});
-
-
-function UndefinedObjectError (msg) {
+function UndefinedObjectError(msg) {
     this.message = msg;
     this.name = this.constructor.name;
 
 
-   let stack = new Error().stack;
+    let stack = new Error().stack;
 
     if (typeof stack === 'string') {
         this.stack = defineStack(stack);
@@ -75,7 +25,7 @@ function UndefinedObjectError (msg) {
 }
 
 UndefinedObjectError.prototype = Object.create(Error.prototype, {
-    constructor: Object.assign(constructorConfig, {
+    constructor: Object.assign(CONSTRUCTOR_CONFIG, {
         value: UndefinedObjectError
     })
 });
@@ -95,7 +45,7 @@ function getObjectKeys(obj) {
         return Object.keys(obj);
     } catch (err) {
 
-        console.groupCollapsed('%c'+ err.name, styles);
+        console.groupCollapsed('%c' + err.name, styles);
         // Start grouping
 
         console.log('%c' + err.message, styles, '\n Passed object:', obj);
