@@ -71,3 +71,5 @@ getObjectKeys(testObj1);
 
 // Test 2
 getObjectKeys(testObj2);
+
+console.log(12321);
