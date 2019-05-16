@@ -1,4 +1,4 @@
-import { defineStack } from './helpers';
+import defineStack from '../helpers/defineStack';
 
 class EmptyObjectError extends Error {
   constructor(message) {

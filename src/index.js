@@ -1,6 +1,6 @@
-import { CONSTRUCTOR_CONFIG } from "./config";
-import { defineStack } from "./helpers";
-import EmptyObjectError from "./EmptyObjectError";
+import CONSTRUCTOR_CONFIG from "./config/constructorConfig";
+import defineStack from "./helpers/defineStack";
+import EmptyObjectError from "./packages/EmptyObjectError";
 
 const styles = [
     'display: block'
@@ -71,5 +71,3 @@ getObjectKeys(testObj1);
 
 // Test 2
 getObjectKeys(testObj2);
-
-console.log(12321);
