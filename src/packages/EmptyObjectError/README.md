@@ -1,24 +1,8 @@
-import defineStack from '../helpers/defineStack';
+# Empty Object Error
 
-class EmptyObjectError extends Error {
-  constructor(message) {
-    // Pass remaining arguments (including vendor specific ones) to parent constructor
-    super(message);
+## Simplified using ES5
 
-    // Maintains proper stack trace for where our error was thrown (only available on V8)
-    // if (Error.captureStackTrace) {
-    //   Error.captureStackTrace(this, CustomError);
-    // }
-    this.name = this.constructor.name;
-    this.message = message;
-    this.stack = defineStack(new Error().stack);
-    // Custom debugging information
-  }
-}
-
-export default EmptyObjectError;
-
-/*
+```javascript
   function EmptyObjectError (msg) {
     this.message = msg;
     this.name = this.constructor.name;
@@ -52,4 +36,4 @@ EmptyObjectError.prototype = Object.create(Error.prototype, {
         value: EmptyObjectError
     })
 });
-*/
+```

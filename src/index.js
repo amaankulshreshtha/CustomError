@@ -1,35 +1,6 @@
-import CONSTRUCTOR_CONFIG from "./config/constructorConfig";
-import defineStack from "./helpers/defineStack";
+import styles from "./config/styles";
 import EmptyObjectError from "./packages/EmptyObjectError";
-
-const styles = [
-    'display: block'
-    , 'background: #E91E63'
-    , 'color: white'
-    , 'padding: 4px'
-].join(';');
-
-
-function UndefinedObjectError(msg) {
-    this.message = msg;
-    this.name = this.constructor.name;
-
-
-    let stack = new Error().stack;
-
-    if (typeof stack === 'string') {
-        this.stack = defineStack(stack);
-    } else {
-        Error.captureStackTrace(this, this.constructor)
-    }
-}
-
-UndefinedObjectError.prototype = Object.create(Error.prototype, {
-    constructor: Object.assign(CONSTRUCTOR_CONFIG, {
-        value: UndefinedObjectError
-    })
-});
-
+import UndefinedObjectError from "./packages/UndefinedObjectError";
 
 function getObjectKeys(obj) {
     try {
